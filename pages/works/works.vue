@@ -1,0 +1,3 @@
+<template><view class="page"><PageHeader search transparent :scrolled="scrollTop>400"/><ModuleContent :modules="reference.discovery.modules"/><BrandFooter/><ServiceFloat/><AppTabs current="works"/></view></template>
+<script setup>import {ref} from 'vue';const scrollTop=ref(0);onPageScroll(e=>scrollTop.value=e.scrollTop);import {onPageScroll} from '@dcloudio/uni-app';import {reference} from '../../lib/content';import PageHeader from '../../components/PageHeader.vue';import ModuleContent from '../../components/ModuleContent.vue';import BrandFooter from '../../components/BrandFooter.vue';import ServiceFloat from '../../components/ServiceFloat.vue';import AppTabs from '../../components/AppTabs.vue'</script>
+<style scoped>.page{padding-bottom:100rpx}</style>

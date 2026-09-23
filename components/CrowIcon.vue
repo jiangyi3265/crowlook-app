@@ -1,0 +1,3 @@
+<template><text class="crow-icon" aria-hidden="true">{{glyphs[name]||glyphs['chat-o']}}</text></template>
+<script setup>defineProps({name:String});const glyphs={'chat-o':'\uf02d','like-o':'\uf079',like:'\uf07a','location-o':'\uf07c','bulb-o':'\uf020','underway-o':'\uf0d0',bars:'\uf016',wechat:'\uf0e2','comment-o':'\uf03b',description:'\uf046','user-circle-o':'\uf0d3',close:'\uf034',cross:'\uf042','arrow-left':'\uf008','share-o':'\uf0e7',phone:'\uf09b',edit:'\uf04d','user-o':'\uf0d4','good-job-o':'\uf068','star-o':'\uf0c3'}</script>
+<style>.crow-icon{font-family:crow-icons!important;font-style:normal;font-weight:400;line-height:1;display:inline-block;font-size:inherit}</style>
