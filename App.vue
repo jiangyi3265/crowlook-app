@@ -1,4 +1,15 @@
-<script>export default {}</script>
+<script>
+import { hydrateContent } from './lib/content'
+
+export default {
+  onLaunch() {
+    hydrateContent()
+  },
+  onShow() {
+    hydrateContent()
+  }
+}
+</script>
 <style>
 @font-face{font-family:crow-icons;src:url("/static/ui/vant-icons.woff2") format("woff2");font-weight:normal;font-style:normal;font-display:block}
 /* #ifdef H5 */

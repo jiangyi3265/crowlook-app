@@ -1,10 +1,21 @@
 import { execFile } from 'node:child_process'
+import { request as httpRequest } from 'node:http'
 const API='https://crow.richs.vip/api'
 const endpoints=new Set(['/post/list.json','/post/get.json','/module/page.json','/category/list.json','/post/comment/list.json'])
 const mobileAgent='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 MicroMessenger/8.0.50'
 const cache=new Map()
 export function referenceRequest(req,res){
  const url=new URL(req.url,'http://localhost')
+ if(url.pathname.startsWith('/content-api/')){
+  const headers={...req.headers,host:'127.0.0.1:8080'}
+  const upstream=httpRequest({hostname:'127.0.0.1',port:8080,path:'/api/'+url.pathname.slice('/content-api/'.length)+url.search,method:req.method,headers},response=>{
+   res.writeHead(response.statusCode||502,response.headers)
+   response.pipe(res)
+  })
+  upstream.on('error',()=>res.writeHead(502,{'Content-Type':'application/json; charset=utf-8'}).end(JSON.stringify({errcode:503,message:'Crowlook 后端暂不可用'})))
+  req.pipe(upstream)
+  return true
+ }
  if(!url.pathname.startsWith('/reference-api/')&&url.pathname!=='/reference-video')return false
  if(req.method!=='GET'&&req.method!=='HEAD'){res.writeHead(405).end();return true}
  if(url.pathname==='/reference-video'){
