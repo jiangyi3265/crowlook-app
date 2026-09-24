@@ -2,13 +2,13 @@
   <view class="home-page">
     <AppHeader />
     <view v-if="!playing" class="home-photo" role="img" aria-label="乌鸦 Crowlook 杭州店，粉色艺术长廊">
-      <image class="reference-photo" src="/static/reference/home.webp" mode="widthFix" />
+      <image class="reference-photo" :src="media(config.home_image || '/static/reference/home.webp')" mode="widthFix" />
     </view>
-    <video v-if="playing" id="home-film" class="home-film" :src="reference.home.modules[0].content[0].video" autoplay controls object-fit="contain" @ended="playing=false" @error="videoFailed"/>
-    <view v-if="!playing" class="home-caption">乌鸦 Crowlook · 杭州店</view>
+    <video v-if="playing" id="home-film" class="home-film" :src="media(heroVideo)" autoplay controls object-fit="contain" @ended="playing=false" @error="videoFailed"/>
+    <view v-if="!playing" class="home-caption">{{ config.home_caption || '乌鸦 Crowlook · 杭州店' }}</view>
     <view v-if="!playing" class="home-statement">
-      <text class="statement-cn">不需要任何外界的审视</text>
-      <text class="statement-en">no single injector unlocks this</text>
+      <text class="statement-cn">{{ config.home_statement_cn || '不需要任何外界的审视' }}</text>
+      <text class="statement-en">{{ config.home_statement_en || 'no single injector unlocks this' }}</text>
     </view>
     <view v-if="!playing && !scrolled" class="playback-shade"><button class="playback-button" aria-label="播放品牌影像" @click="showVideoInfo"><view class="pause-line"/><view class="pause-line"/></button></view>
     <button class="service-button" aria-label="客服" @click="showServiceInfo"><view class="bubble"><view class="smile"/></view></button>
@@ -19,15 +19,16 @@
 <script setup>
 import AppHeader from '../../components/AppHeader.vue'
 import AppTabs from '../../components/AppTabs.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { onPageScroll } from '@dcloudio/uni-app'
-import { reference, service } from '../../lib/content'
+import { config, media, reference, service } from '../../lib/content'
 import ModuleContent from '../../components/ModuleContent.vue'
 import BrandFooter from '../../components/BrandFooter.vue'
 const playing=ref(false),scrolled=ref(false)
+const heroVideo=computed(()=>reference.home?.modules?.[0]?.content?.[0]?.video||'')
 onPageScroll(e=>scrolled.value=e.scrollTop>80)
 const videoFailed=()=>{playing.value=false;uni.showToast({title:'视频暂时无法播放，请稍后重试',icon:'none'})}
-const showVideoInfo=()=>{playing.value=true;uni.pageScrollTo({scrollTop:0,duration:0})}
+const showVideoInfo=()=>{if(!heroVideo.value){uni.showToast({title:'品牌视频暂未配置',icon:'none'});return}playing.value=true;uni.pageScrollTo({scrollTop:0,duration:0})}
 const showServiceInfo=service
 </script>
 <style scoped>

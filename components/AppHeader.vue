@@ -12,9 +12,9 @@
 </template>
 <script setup>
 defineProps({search:Boolean})
-const showMore=()=>uni.showActionSheet({itemList:['关于乌鸦 Crowlook','返回首页'],success:({tapIndex})=>tapIndex===1?goHome():uni.showModal({title:'乌鸦 Crowlook',content:'本地 UniApp 页面复刻预览。',showCancel:false})})
+const showMore=()=>uni.showActionSheet({itemList:['关于乌鸦 Crowlook','返回首页'],success:({tapIndex})=>tapIndex===1?goHome():uni.showModal({title:'乌鸦 Crowlook',content:'专注人物影像与定制拍摄服务。',showCancel:false})})
 const goHome=()=>uni.reLaunch({url:'/pages/index/index'})
-const showWindow=()=>uni.showToast({title:'当前为本地页面预览',icon:'none'})
+const showWindow=()=>uni.showToast({title:'欢迎来到乌鸦 Crowlook',icon:'none'})
 const showSearch=()=>uni.navigateTo({url:'/pages/search/search'})
 </script>
 <style scoped>
